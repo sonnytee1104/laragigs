@@ -14,4 +14,7 @@
     </div>
     {{-- /laravel/laragis/public/listings/{{$listing['id']}}  --}}
     {{-- /listing/{{$listing['id']}} --}}
+    <div class="mt-6 p-4">
+        {{ $listings->links() }}
+    </div>
 </x-layout>
