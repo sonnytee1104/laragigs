@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\UserController;
 
 use function Laravel\Prompts\error;
 
@@ -35,9 +36,26 @@ Route::get('/listing/{listing}/edit', [ListingController::class, 'edit']);
 // Update listing
 Route::put('/listings/{listing}', [ListingController::class, 'update']);
 
+// Delete listing
+Route::delete('/listings/{listing}', [ListingController::class, 'deleteList']);
+
 //Single listing
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
 //check db
+
+
+//Show register/create form
+Route::get('/register', [UserController::class, 'register']);
+
+// Create new user
+Route::post('/users', [UserController::class, 'store']);
+
+//Log user out
+Route::post('/logout', [UserController::class, 'logout']);
+
+
+
+
 
 // Route::get('/check-mysql-connection', function () {
 //     try {
