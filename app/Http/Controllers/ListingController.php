@@ -6,6 +6,7 @@ use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
+
 class ListingController extends Controller
 {
     // Show all listing
@@ -47,6 +48,8 @@ class ListingController extends Controller
             $formFields['logo'] = $request->file('logo')->store('logos', 'public');
         }
 
+        $formFields['user_id'] = auth()->id();
+
         Listing::create($formFields);
 
 
@@ -62,6 +65,10 @@ class ListingController extends Controller
     //update
     public function update(Request $request, Listing $listing)
     {
+        // verify user is the owner or not
+        if ($listing->user_id != auth()->id()) {
+            abort(403, "You don't have permission for this action");
+        }
         $formFields = $request->validate([
             'title' => 'required',
             'company' => 'required',
@@ -85,7 +92,18 @@ class ListingController extends Controller
     //Delete listing
     public function deleteList(Listing $listing)
     {
+        // verify user is the owner or not
+        if ($listing->user_id != auth()->id()) {
+            abort(403, "You don't have permission for this action");
+        }
+
         $listing->delete();
         return redirect('/')->with('successMess', 'Job is deleted');
+    }
+
+    //Manage Listings
+    public function manage()
+    {
+        return view('listings.manage', ['listings' => auth()->user()->listings()->get()]);
     }
 }
