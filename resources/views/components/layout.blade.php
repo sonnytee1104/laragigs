@@ -29,7 +29,6 @@
     <nav class="flex justify-between items-center mb-4">
         <a href="/"><img class="w-24" src="{{ asset('images/no-image.png') }}" alt=""
                 class="logo" /></a>
-
         @auth
             <ul class="flex space-x-6 mr-6 text-lg">
                 <li>
